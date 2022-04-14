@@ -19,4 +19,10 @@ export class Player {
     getPlayerDamage(){
         return this.damage;
     }
+    setPlayerDamage(newDamage){
+        this.damage = newDamage;
+    }
+    setPlayerHealth(damage){
+        this.health = this.health - damage;
+    }
 }

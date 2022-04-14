@@ -1,11 +1,5 @@
-import * as express from 'express';
-const app = express();
-const port = 3000;
+import {StartGame} from './StartGame';
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
-app.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
-});
+ const run = new StartGame();
+ console.log("Game Starting...");
+ run.createPlayers();

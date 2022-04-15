@@ -1,5 +1,5 @@
-import {StartGame} from './StartGame';
+import {SetGame} from './SetGame';
 
- const run = new StartGame();
- console.log("Game Starting...");
+ const run = new SetGame();
+ console.log("Setting Game...");
  run.createPlayers();

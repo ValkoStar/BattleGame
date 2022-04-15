@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var StartGame_1 = require("./StartGame");
-var run = new StartGame_1.StartGame();
-console.log("Game Starting...");
+var SetGame_1 = require("./SetGame");
+var run = new SetGame_1.SetGame();
+console.log("Setting Game...");
 run.createPlayers();

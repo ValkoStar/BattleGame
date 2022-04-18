@@ -1,4 +1,4 @@
-# BattleGame
+# Battle Game
  Simple turn-based battle game
 
 ## Run by ```npm start ```

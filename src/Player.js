@@ -10,6 +10,7 @@ var Player = /** @class */ (function () {
         this.damage = damage;
         this.health = health;
     }
+    //Getters and setters for the player:
     Player.prototype.getPlayerId = function () {
         return this.id;
     };
@@ -34,6 +35,7 @@ var Player = /** @class */ (function () {
     Player.prototype.setPlayerDefenseSkills = function (defenseSkills) {
         this.defenseSkills = defenseSkills;
         this.skillsList = this.defenseSkills.concat(this.attackSkills);
+        //After the defense and attack skills are chosen, shuffle the skills:
         this.shuffleSkills();
     };
     Player.prototype.getPlayerDefenseSkills = function () {
@@ -47,12 +49,14 @@ var Player = /** @class */ (function () {
     };
     Player.prototype.shuffleSkills = function () {
         var _a;
+        console.log(("Shuffling Player") + this.id + ("'s skills..."));
         for (var i = this.skillsList.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
             _a = [this.skillsList[j], this.skillsList[i]], this.skillsList[i] = _a[0], this.skillsList[j] = _a[1];
         }
     };
     Player.prototype.moveSkillToLast = function () {
+        //Move skill to the end of the skills list so it could be played again in 4 turns:
         this.skillsList.push(this.skillsList.shift());
     };
     Player.prototype.setPlayerSkills = function (skillsList) {

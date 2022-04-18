@@ -3,17 +3,19 @@ exports.__esModule = true;
 exports.StartGame = void 0;
 var PlaySkill_1 = require("./PlaySkill");
 var StartGame = /** @class */ (function () {
+    //A class to start the game and handle the game flow:
     function StartGame(Player1, Player2) {
         this.playGame(Player1, Player2);
-        console.log("Da");
     }
     StartGame.prototype.playGame = function (Player1, Player2) {
         console.log("Starting Game:");
         var turnsCounter = 0;
-        while (turnsCounter < 5) //Player1.getPlayerHealth() > 0 && Player2.getPlayerHealth() > 0)
-         {
+        //Loop until one of the players is destroyed
+        while (Player1.getPlayerHealth() > 0 && Player2.getPlayerHealth() > 0) {
             turnsCounter++;
             console.log("Turn " + turnsCounter);
+            //Check if the next skill in some of the players is shield and cast it in advance
+            //So the player doesn't receive any damage from the other one
             if (Player1.getAllPlayerSkills()[0] == "shield") {
                 Player1.setShieldCondition(true);
             }
@@ -26,17 +28,28 @@ var StartGame = /** @class */ (function () {
             else {
                 Player2.setShieldCondition(false);
             }
+            //Invoke skills handler 2 times: one for Player1 as playing player, next for Player2 as playing player:
             this.skillsHandler(Player1, Player2);
             this.skillsHandler(Player2, Player1);
-            console.log("Player1 health: " + Player1.getPlayerHealth());
-            console.log("Player2 health" + Player2.getPlayerHealth());
+            //Displays both players current health:
+            console.log("Player1 remaining health: " + Player1.getPlayerHealth());
+            console.log("Player2 remaining health: " + Player2.getPlayerHealth());
+        }
+        //Once it moves out of the loop, the game has ended, and corrispondingly displays the winener:
+        console.log("Game ended!");
+        if (Player1.getPlayerHealth() <= 0) {
+            console.log("Winner is Player2 with remaining health: " + Player2.getPlayerHealth());
+        }
+        else {
+            console.log("Winner is Player1 with remaining health: " + Player1.getPlayerHealth());
         }
     };
     StartGame.prototype.skillsHandler = function (PlayerPlaying, OtherPlayer) {
+        //A method to correspondingly act based on player's skills 
+        //after the attack is done, move the attack to the end of the player's skill list
         var playASkill = new PlaySkill_1.PlaySkill();
         var playerSkillsList = PlayerPlaying.getAllPlayerSkills();
-        // console.log("       " + playerSkillsList);
-        switch (playerSkillsList[0]) {
+        switch (playerSkillsList[0]) { //Always checks the first item in the list, since it changes after the attack is done
             case "simpleAttack":
                 console.log("Casting simple attack on Player" + PlayerPlaying.getPlayerId());
                 playASkill.simpleAttack(PlayerPlaying, OtherPlayer);
@@ -77,8 +90,9 @@ var StartGame = /** @class */ (function () {
                 playASkill.moveSkillinList(PlayerPlaying);
                 break;
             case "dodge":
-                console.log("Casting dodge skill on Player" + PlayerPlaying.getPlayerId());
-                PlayerPlaying.setPlayerHealth(200);
+                console.log("Casting dodge skill by Player" + PlayerPlaying.getPlayerId());
+                playASkill.dodge(PlayerPlaying);
+                playASkill.moveSkillinList(PlayerPlaying);
                 break;
         }
     };
